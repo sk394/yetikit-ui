@@ -1,0 +1,53 @@
+---
+title: Data Table
+description: A typed data table with global search, column sorting and pagination.
+---
+
+<ComponentPreview name="data-table-demo" description="On narrow viewports the table scrolls horizontally." minHeight={420} />
+
+## Installation
+
+<ComponentInstall name="data-table" />
+
+## Usage
+
+```tsx
+import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
+
+type User = { id: string; name: string; email: string; age: number };
+
+const columns: DataTableColumn<User>[] = [
+  { key: 'name', header: 'Name', sortable: true },
+  { key: 'email', header: 'Email' },
+  { key: 'age', header: 'Age', sortable: true, className: 'text-right' },
+];
+
+<DataTable data={users} columns={columns} pageSize={10} getRowId={(row) => row.id} />;
+```
+
+## Columns
+
+<TypeTable
+  type={{
+    key: { description: 'Unique key. Used as `row[key]` unless `accessor` is given.', type: 'string', required: true },
+    header: { description: 'Header cell content.', type: 'ReactNode', required: true },
+    accessor: { description: 'Returns the raw value used for sorting and searching.', type: '(row: T) => unknown' },
+    cell: { description: 'Custom cell renderer.', type: '(row: T) => ReactNode' },
+    sortable: { description: 'Show a sort toggle in the header.', type: 'boolean', default: 'false' },
+    className: { description: 'Applied to both the header and body cells.', type: 'string' },
+  }}
+/>
+
+## Props
+
+<TypeTable
+  type={{
+    data: { description: 'Rows to render.', type: 'T[]', required: true },
+    columns: { description: 'Column definitions.', type: 'DataTableColumn<T>[]', required: true },
+    pageSize: { description: 'Rows per page. 0 disables pagination.', type: 'number', default: '10' },
+    searchable: { description: 'Show the search input.', type: 'boolean', default: 'true' },
+    searchPlaceholder: { description: 'Placeholder for the search input.', type: 'string', default: '"Search…"' },
+    getRowId: { description: 'Stable row key.', type: '(row: T, index: number) => string | number' },
+    emptyMessage: { description: 'Shown when no rows match.', type: 'ReactNode', default: '"No results."' },
+  }}
+/>

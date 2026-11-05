@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "yetikit-ui",
+  "homepage": "https://github.com/sk394/yetikit-ui",
+  "items": [
+    {
+      "name": "stat-card",
+      "type": "registry:ui",
+      "title": "Stat Card",
+      "description": "A KPI card with a value, an optional trend delta and an icon slot.",
+      "categories": ["cards", "dashboard"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["card"],
+      "files": [{ "path": "registry/ui/stat-card.tsx", "type": "registry:ui" }]
+    },
+    {
+      "name": "animated-number",
+      "type": "registry:ui",
+      "title": "Animated Number",
+      "description": "Counts up to a value with an eased animation when it scrolls into view.",
+      "categories": ["animation"],
+      "files": [{ "path": "registry/ui/animated-number.tsx", "type": "registry:ui" }]
+    },
+    {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "description": "A typed data table with global search, column sorting and pagination.",
+      "categories": ["data", "advanced"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["table", "button", "input"],
+      "files": [{ "path": "registry/ui/data-table.tsx", "type": "registry:ui" }]
+    }
+  ]
+}

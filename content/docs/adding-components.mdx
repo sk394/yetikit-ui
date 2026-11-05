@@ -1,0 +1,111 @@
+---
+title: Adding components
+description: The end-to-end recipe for adding a component, its demo and its docs page.
+---
+
+## 1. Scaffold
+
+```bash
+pnpm new:component fancy-tabs --title "Fancy Tabs" --description "Tabs with an animated indicator." --category navigation,advanced
+```
+
+The script creates:
+
+- `registry/ui/fancy-tabs.tsx`: the component.
+- `registry/examples/fancy-tabs-demo.tsx`: the demo (must `export default` a component).
+- `content/docs/components/fancy-tabs.mdx`: the docs page.
+- a new item in `registry.json`.
+
+You can also create these files by hand; the only hard rule is that every file referenced from
+`registry.json` must exist.
+
+## 2. Write the component
+
+Registry components live in `registry/ui/` and import the site's shadcn primitives from
+`@/components/ui/*` and `cn` from `@/lib/utils`, exactly like a consumer project would.
+When the CLI installs the component it rewrites those imports to the consumer's aliases.
+
+If the component needs a shadcn component that is not yet in `components/ui/`, add it to the site first:
+
+```bash
+pnpm dlx shadcn@latest add popover
+```
+
+Then list it under `registryDependencies` in `registry.json` so consumers get it too.
+
+### `registry.json` fields
+
+```json
+{
+  "name": "fancy-tabs",
+  "type": "registry:ui",
+  "title": "Fancy Tabs",
+  "description": "Tabs with an animated indicator.",
+  "categories": ["navigation", "advanced"],
+  "dependencies": ["motion"],
+  "registryDependencies": ["tabs"],
+  "files": [{ "path": "registry/ui/fancy-tabs.tsx", "type": "registry:ui" }]
+}
+```
+
+| Field | Purpose |
+| --- | --- |
+| `dependencies` | npm packages the CLI should install. |
+| `registryDependencies` | shadcn components (or URLs of other registry items) to install first. |
+| `categories` | Free-form tags. They power the filters on the home page. |
+| `files` | Every file that makes up the item. Hooks go in `registry/hooks/` with type `registry:hook`, utilities in `registry/lib/` with `registry:lib`. |
+
+## 3. Write demos
+
+A demo is any `.tsx` file in `registry/examples/`. Its file name is the demo name.
+Demos can have state, fetch data, and use any site component. Several demos per component are fine:
+`fancy-tabs-demo.tsx`, `fancy-tabs-vertical.tsx`, and so on.
+
+Run `pnpm registry:index` (or just restart `pnpm dev`) after adding a demo so it is picked up.
+
+## 4. Write the docs page
+
+```mdx
+---
+title: Fancy Tabs
+description: Tabs with an animated indicator.
+---
+
+<ComponentPreview name="fancy-tabs-demo" />
+
+## Installation
+
+<ComponentInstall name="fancy-tabs" />
+
+## Usage
+
+\`\`\`tsx
+import { FancyTabs } from '@/components/ui/fancy-tabs';
+\`\`\`
+
+## Examples
+
+### Vertical
+
+<ComponentPreview name="fancy-tabs-vertical" defaultViewport="mobile" />
+```
+
+MDX helpers available on every page:
+
+| Component | What it does |
+| --- | --- |
+| `<ComponentPreview name="…" />` | Live demo in an iframe with desktop / tablet / mobile toggles and a Code tab. Props: `description`, `hideCode`, `defaultViewport`, `minHeight`. |
+| `<ComponentInstall name="…" />` | CLI commands for pnpm / npm / yarn / bun plus a manual tab with dependencies and source. |
+| `<ComponentSource name="…" />` | Source of a registry item. Use `src="registry/hooks/use-x.ts"` for any other registry file. |
+| `<ComponentsList />` | Table of every item in `registry.json`. |
+| `<Steps>`, `<Tabs>`, `<TypeTable>`, `<Callout>` | Standard Fumadocs components. |
+
+## 5. Build and publish
+
+```bash
+pnpm registry:build   # validates registry.json and writes public/r/*.json
+pnpm build            # runs registry:build, then next build
+```
+
+Push to `main` and the component is installable from GitHub. Deploy the site anywhere Next.js runs
+and set `NEXT_PUBLIC_SITE_URL` so the hosted install commands point at the right domain.

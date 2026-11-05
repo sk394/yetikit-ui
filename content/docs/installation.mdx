@@ -1,0 +1,50 @@
+---
+title: Installation
+description: How to use YetiKit UI components in your own project.
+---
+
+## Requirements
+
+Components are written for projects initialised with shadcn's **Base UI** style and Tailwind CSS v4.
+If you are starting fresh:
+
+```bash
+pnpm dlx shadcn@latest init --base base
+```
+
+Existing projects keep whatever primitive library they were set up with. Components that only use
+Tailwind and plain React work anywhere; components that build on shadcn primitives expect the Base UI
+versions of those primitives.
+
+## Install a component
+
+Straight from GitHub (nothing to deploy):
+
+```bash
+pnpm dlx shadcn@latest add sk394/yetikit-ui/stat-card
+```
+
+Pin a branch, tag or commit by appending `#ref`:
+
+```bash
+pnpm dlx shadcn@latest add sk394/yetikit-ui/stat-card#main
+```
+
+From the hosted registry once this site is deployed:
+
+```bash
+pnpm dlx shadcn@latest add https://<your-domain>/r/stat-card.json
+```
+
+The CLI installs npm dependencies and any shadcn components the item depends on
+(`registryDependencies`), then writes the file to your `components/ui/` folder.
+
+## Browse what is available
+
+```bash
+pnpm dlx shadcn@latest list sk394/yetikit-ui
+pnpm dlx shadcn@latest search sk394/yetikit-ui --query table
+pnpm dlx shadcn@latest view sk394/yetikit-ui/data-table
+```
+
+Or use the search box on the [home page](/) and the docs search (`⌘K`).

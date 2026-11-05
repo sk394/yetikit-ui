@@ -1,0 +1,42 @@
+---
+title: Animated Number
+description: Counts up to a value with an eased animation when it scrolls into view.
+---
+
+<ComponentPreview name="animated-number-demo" />
+
+## Installation
+
+<ComponentInstall name="animated-number" />
+
+## Usage
+
+```tsx
+import { AnimatedNumber } from '@/components/ui/animated-number';
+```
+
+```tsx
+<AnimatedNumber value={128430} className="text-4xl font-semibold" />
+```
+
+Pass a `format` function for currency or units:
+
+```tsx
+<AnimatedNumber
+  value={4521.5}
+  format={(n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n)}
+/>
+```
+
+## Props
+
+<TypeTable
+  type={{
+    value: { description: 'Target value.', type: 'number', required: true },
+    duration: { description: 'Animation length in milliseconds.', type: 'number', default: '1200' },
+    startOnView: { description: 'Wait until the element is visible before animating.', type: 'boolean', default: 'true' },
+    format: { description: 'Formatter for the displayed number.', type: '(value: number) => string' },
+  }}
+/>
+
+Respects `prefers-reduced-motion`: the final value is shown immediately.
