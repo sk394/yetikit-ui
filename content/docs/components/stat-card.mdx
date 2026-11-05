@@ -1,0 +1,35 @@
+---
+title: Stat Card
+description: A KPI card with a value, an optional trend delta and an icon slot.
+---
+
+<ComponentPreview name="stat-card-demo" description="Resize to tablet or mobile to see the grid collapse." />
+
+## Installation
+
+<ComponentInstall name="stat-card" />
+
+## Usage
+
+```tsx
+import { DollarSign } from 'lucide-react';
+import { StatCard } from '@/components/ui/stat-card';
+```
+
+```tsx
+<StatCard label="Revenue" value="$45,231" delta={20.1} deltaLabel="vs last month" icon={<DollarSign />} />
+```
+
+## Props
+
+<TypeTable
+  type={{
+    label: { description: 'Short label shown above the value.', type: 'ReactNode', required: true },
+    value: { description: 'The headline value.', type: 'ReactNode', required: true },
+    delta: { description: 'Percentage change. Positive is green, negative is red, zero is neutral.', type: 'number' },
+    deltaLabel: { description: 'Text rendered after the delta.', type: 'ReactNode' },
+    icon: { description: 'Icon rendered in the top-right corner.', type: 'ReactNode' },
+  }}
+/>
+
+All other props are forwarded to the underlying `Card`.

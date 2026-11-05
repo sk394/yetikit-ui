@@ -1,0 +1,57 @@
+---
+title: Introduction
+description: What YetiKit UI is and how the pieces fit together.
+---
+
+YetiKit UI is a personal **shadcn registry**: a home for the components built on top of
+[shadcn/ui](https://ui.shadcn.com) with the [Base UI](https://base-ui.com) primitives and Tailwind CSS v4.
+Every component here can be installed into any shadcn project with one command, and every component has a
+docs page with a live demo you can view at desktop, tablet and mobile widths.
+
+## How it is organised
+
+| Folder | What lives there |
+| --- | --- |
+| `registry/ui/` | The components themselves. One file per component. |
+| `registry/examples/` | Demos. Each file is rendered in the docs previewer and at `/preview/<name>`. |
+| `registry.json` | The manifest shadcn reads. Lists every component, its files and dependencies. |
+| `content/docs/components/` | One MDX page per component. |
+| `components/ui/` | The site's own shadcn components (button, tabs, table…). Registry components may import these. |
+
+## The workflow
+
+<Steps>
+<Step>
+### Scaffold
+
+```bash
+pnpm new:component my-component --title "My Component" --category advanced
+```
+
+This creates the component, a demo, a docs page and a `registry.json` entry.
+</Step>
+<Step>
+### Build it
+
+Edit `registry/ui/my-component.tsx` and make `registry/examples/my-component-demo.tsx` show it off.
+</Step>
+<Step>
+### Preview it
+
+```bash
+pnpm dev
+```
+
+Open `http://localhost:3000/docs/components/my-component`. Switch between desktop, tablet and mobile
+with the toggles above the demo.
+</Step>
+<Step>
+### Ship it
+
+Commit and push. Because the repository is public and has a `registry.json` at its root, the component is
+immediately installable with `pnpm dlx shadcn@latest add sk394/yetikit-ui/my-component`.
+</Step>
+</Steps>
+
+Read [Adding components](/docs/adding-components) for the details, or jump to the
+[component library](/docs/components).
